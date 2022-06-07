@@ -6,6 +6,7 @@ import { Country } from '../interfaces/pais.interface';
 @Injectable({
   providedIn: 'root'
 })
+
 export class PaisService {
 
   private _apiUrl: string = 'https://restcountries.com/v3.1';
@@ -23,4 +24,12 @@ export class PaisService {
     const url = `${this._apiUrl}/capital/${termino}`;
     return this.http.get<Country[]>(url);
   }
+
+  getPaisPorCodigo( id:string ): Observable <Country[]>
+  {
+    const url = `${this._apiUrl}/alpha/${id}`;
+    return this.http.get<Country[]>(url);
+  }  
+
+
 }
