@@ -1,18 +1,27 @@
-<h2>Por País</h2>
+<h2 class="animate__animated animate__bounce">Por País</h2>
 <hr>
 <div class="row">
     <div class="col">
         <app-pais-input (onEnter)="buscar($event)" (onDebounce)="sugerencias($event)" [placeHolder]="'Buscar por pais'"></app-pais-input>
     </div>
 </div>
+<br>
+<ul *ngIf="mostrarSugerencias" class="list-group">
+    <li *ngFor="let pais of paisesSugeridos" class="list-group-item list-group-item-action">
+        <a class="nav-link" [routerLink]="['/pais',pais.cca2]"><img class="xsmall-flag" [src] ="pais.flags.svg"> {{ pais.name.common }} </a>
+    </li>
+    <li class="list-group-item list-group-item-action" (click)="buscar(termino)">
+        <a class="nav-link"> Buscar: {{ termino}} </a>
+    </li>
+</ul>
 <hr>
-
-<div *ngIf="hayError" class="alert alert-danger">
+<div *ngIf="hayError" class="alert alert-danger animate__animated animate__flip">
     No se encontro el termino: {{ termino }}
 </div>
 
-<div *ngIf="paises.length!==0" class = "row">
+<div *ngIf="paises.length!==0" class = "row animate__animated animate__flipInY"> 
     <div class = "col">
         <app-pais-table [paisesI]="paises"></app-pais-table>
     </div>
 </div>
+

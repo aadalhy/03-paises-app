@@ -10,8 +10,10 @@ import { PaisService } from '../../services/pais.service';
 export class PorCapitalComponent implements OnInit {
 
   paises: Country[] = [];
+  paisesSugeridos: Country[] = [];
   termino: string="";
   hayError: boolean = false;
+  mostrarSugerencias: boolean = false;
 
   constructor( private paisService: PaisService ) { }
 
@@ -21,17 +23,52 @@ export class PorCapitalComponent implements OnInit {
   buscar(terminoO:string)
   {
     this.hayError = false;
-    //console.log(this.termino);
+    this.mostrarSugerencias = false;
+    
     this.termino = terminoO;
+    console.log(this.termino);
     this.paisService.buscarCapital(this.termino).subscribe(paises => 
       {
         //console.log(paises);
         this.paises =paises;
       }, 
       (error) => {
-        this.hayError = true;
+        //this.hayError = true;
+        if (this.termino.length === 0)
+        {
+          this.hayError = false;
+        }
+        else
+        {
+          this.hayError = true;
+        }
         this.paises = [];
       });
   }
 
+  sugerencias(termino: string)
+  {
+    this.hayError = false;
+    this.mostrarSugerencias = true;
+    this.termino = termino;
+
+    this.paisService.buscarPais(this.termino).subscribe(paises => {
+      this.paisesSugeridos = paises;
+    }, 
+      (error) => {
+        if (this.termino.length === 0)
+        {
+          this.hayError = false;
+        }
+        else
+        {
+          this.hayError = true;
+        }
+        
+        this.paisesSugeridos = [];
+      }
+    );
+    //console.log(termino);
+    
+  }
 }

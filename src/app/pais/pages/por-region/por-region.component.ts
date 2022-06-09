@@ -26,7 +26,7 @@ export class PorRegionComponent implements OnInit {
     return (region === this.regionActiva) ? "btn btn-primary" : "btn btn-outline-primary";
   }
 
-  activarRegion(region: string) 
+  activarRegion(region: string): void
   {
     if(region === this.regionActiva) {return};
 
